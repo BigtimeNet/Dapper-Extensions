@@ -49,7 +49,7 @@ namespace DapperExtensions
                 Type mapType = GetMapType(entityType);
                 if (mapType == null)
                 {
-                    mapType = DefaultMapper.MakeGenericType(entityType);
+						  mapType = DefaultMapper.MakeGenericType(entityType);
                 }
 
                 map = Activator.CreateInstance(mapType) as IClassMapper;
