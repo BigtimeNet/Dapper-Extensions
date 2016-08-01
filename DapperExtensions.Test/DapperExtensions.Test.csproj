@@ -111,16 +111,12 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DapperExtensions.Test.Entities\DapperExtensions.Test.Entities.csproj">
-      <Project>{DAFAEFFC-0E56-4FA5-923C-DE47E91B51D8}</Project>
+      <Project>{dafaeffc-0e56-4fa5-923c-de47e91b51d8}</Project>
       <Name>DapperExtensions.Test.Entities</Name>
     </ProjectReference>
     <ProjectReference Include="..\DapperExtensions.Test.Maps\DapperExtensions.Test.Maps.csproj">
-      <Project>{87220EF9-8EE4-4EB0-829C-31C51BD7B750}</Project>
+      <Project>{87220ef9-8ee4-4eb0-829c-31c51bd7b750}</Project>
       <Name>DapperExtensions.Test.Maps</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DapperExtensions\DapperExtensions.csproj">
-      <Project>{4C1A2C6C-A469-4C87-98D1-F1D517FA1ACF}</Project>
-      <Name>DapperExtensions</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

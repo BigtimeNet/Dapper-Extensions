@@ -44,7 +44,7 @@ namespace DapperExtensions.Sql
 
             StringBuilder sql = new StringBuilder(string.Format("SELECT {0} FROM {1}",
                 BuildSelectColumns(classMap),
-                GetTableName(classMap)));
+                GetTableNameForSelect(classMap)));
             if (predicate != null)
             {
                 sql.Append(" WHERE ")
@@ -74,7 +74,7 @@ namespace DapperExtensions.Sql
 
             StringBuilder innerSql = new StringBuilder(string.Format("SELECT {0} FROM {1}",
                 BuildSelectColumns(classMap),
-                GetTableName(classMap)));
+                GetTableNameForSelect(classMap)));
             if (predicate != null)
             {
                 innerSql.Append(" WHERE ")
@@ -102,7 +102,7 @@ namespace DapperExtensions.Sql
 
             StringBuilder innerSql = new StringBuilder(string.Format("SELECT {0} FROM {1}",
                 BuildSelectColumns(classMap),
-                GetTableName(classMap)));
+					 GetTableNameForSelect(classMap)));
             if (predicate != null)
             {
                 innerSql.Append(" WHERE ")
@@ -213,7 +213,12 @@ namespace DapperExtensions.Sql
             return Configuration.Dialect.GetTableName(map.SchemaName, map.TableName, null);
         }
 
-        public virtual string GetColumnName(IClassMapper map, IPropertyMap property, bool includeAlias)
+		public virtual string GetTableNameForSelect(IClassMapper map) {
+			if (map.TableNameForSelect==null || map.TableNameForSelect == "") { return GetTableName(map); }
+			return Configuration.Dialect.GetTableName(map.SchemaName, map.TableNameForSelect, null);
+		}
+
+		public virtual string GetColumnName(IClassMapper map, IPropertyMap property, bool includeAlias)
         {
             string alias = null;
             if (property.ColumnName != property.Name && includeAlias)

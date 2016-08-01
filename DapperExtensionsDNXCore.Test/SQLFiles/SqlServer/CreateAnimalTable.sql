@@ -1,0 +1,9 @@
+﻿IF (OBJECT_ID('Animal') IS NOT NULL)
+BEGIN
+    DROP TABLE Animal
+END
+
+CREATE TABLE Animal (
+    Id bigint IDENTITY(1,1) PRIMARY KEY,
+    Name NVARCHAR(50)
+)

@@ -13,9 +13,9 @@ namespace DapperExtensions.Mapper
     /// </summary>
     public class PluralizedAutoClassMapper<T> : AutoClassMapper<T> where T : class
     {
-        public override void Table(string tableName)
+        public override void Table(string tableName, string selectTableName = "")
         {
-            base.Table(Formatting.Pluralize(tableName));
+            base.Table(Formatting.Pluralize(tableName), Formatting.Pluralize(selectTableName));
         }
         
         // Adapted from: http://mattgrande.wordpress.com/2009/10/28/pluralization-helper-for-c/

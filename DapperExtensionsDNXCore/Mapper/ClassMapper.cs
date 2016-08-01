@@ -12,6 +12,7 @@ namespace DapperExtensions.Mapper
     {
         string SchemaName { get; }
         string TableName { get; }
+		  string TableNameForSelect { get; }
         IList<IPropertyMap> Properties { get; }
         Type EntityType { get; }
     }
@@ -35,10 +36,15 @@ namespace DapperExtensions.Mapper
         /// </summary>
         public string TableName { get; protected set; }
 
-        /// <summary>
-        /// A collection of properties that will map to columns in the database table.
-        /// </summary>
-        public IList<IPropertyMap> Properties { get; private set; }
+		/// <summary>
+		/// Gets or sets the table to use in the database.
+		/// </summary>
+		public string TableNameForSelect { get; protected set; }
+
+		/// <summary>
+		/// A collection of properties that will map to columns in the database table.
+		/// </summary>
+		public IList<IPropertyMap> Properties { get; private set; }
 
         public Type EntityType
         {
@@ -72,9 +78,10 @@ namespace DapperExtensions.Mapper
             SchemaName = schemaName;
         }
 
-        public virtual void Table(string tableName)
+        public virtual void Table(string tableName, string tableNameForSelect="")
         {
             TableName = tableName;
+	        TableNameForSelect = TableNameForSelect == "" ? tableName : TableNameForSelect;
         }
 
         protected virtual void AutoMap()
