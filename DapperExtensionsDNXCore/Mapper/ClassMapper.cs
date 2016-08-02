@@ -81,7 +81,7 @@ namespace DapperExtensions.Mapper
         public virtual void Table(string tableName, string tableNameForSelect="")
         {
             TableName = tableName;
-	        TableNameForSelect = TableNameForSelect == "" ? tableName : TableNameForSelect;
+	        TableNameForSelect = tableNameForSelect == "" ? tableName : tableNameForSelect;
         }
 
         protected virtual void AutoMap()

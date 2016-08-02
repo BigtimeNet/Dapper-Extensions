@@ -21,6 +21,8 @@ namespace DapperExtensions.Mapper {
 				if (tn != "") { TableName = tn; }
 				var sn = ((TableAttribute)type.GetTypeInfo().GetCustomAttributes(true).FirstOrDefault(attr => attr.GetType().Name == typeof(TableAttribute).Name)).Schema;
 				if (sn != "") { Schema(sn); }
+				var selN = ((TableAttribute)type.GetTypeInfo().GetCustomAttributes(true).FirstOrDefault(attr => attr.GetType().Name == typeof(TableAttribute).Name)).NameForSelect;
+				if (selN != null && selN != "") { TableNameForSelect = selN; }
 			}
 
 			foreach (var property in type.GetProperties()) {
@@ -73,8 +75,10 @@ namespace Dapper {
 		/// Optional Table attribute.
 		/// </summary>
 		/// <param name="tableName"></param>
-		public TableAttribute(string tableName) {
+		/// <param name="tableNameForSelect">If the object uses a query for SELECT, pass the query name here.</param>
+		public TableAttribute(string tableName, string tableNameForSelect = "") {
 			Name = tableName;
+			NameForSelect = tableNameForSelect;
 		}
 		/// <summary>
 		/// Name of the table
@@ -84,6 +88,10 @@ namespace Dapper {
 		/// Name of the schema
 		/// </summary>
 		public string Schema { get; set; }
+		/// <summary>
+		/// If the table uses a view for SELECT and a table for Create/Update/Delete -- then pass the query name in this parameter.
+		/// </summary>
+		public string NameForSelect { get; set; }
 	}
 
 	/// <summary>

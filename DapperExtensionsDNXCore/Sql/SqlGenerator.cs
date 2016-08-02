@@ -215,7 +215,7 @@ namespace DapperExtensions.Sql
 
 		public virtual string GetTableNameForSelect(IClassMapper map) {
 			if (map.TableNameForSelect==null || map.TableNameForSelect == "") { return GetTableName(map); }
-			return Configuration.Dialect.GetTableName(map.SchemaName, map.TableNameForSelect, null);
+			return Configuration.Dialect.GetTableName(map.SchemaName, map.TableNameForSelect, map.TableName);
 		}
 
 		public virtual string GetColumnName(IClassMapper map, IPropertyMap property, bool includeAlias)
