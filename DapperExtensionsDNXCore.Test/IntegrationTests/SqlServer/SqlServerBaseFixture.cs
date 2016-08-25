@@ -27,8 +27,9 @@ namespace DapperExtensions.Test.IntegrationTests.SqlServer
                                 {
                                     ReadScriptFile("CreateAnimalTable"),
                                     ReadScriptFile("CreateFooTable"),
-                                    ReadScriptFile("CreateMultikeyTable"),
-                                    ReadScriptFile("CreatePersonTable"),
+												ReadScriptFile("CreateMultikeyTable"),
+												ReadScriptFile("CreateNullableTestClassTable"),
+												ReadScriptFile("CreatePersonTable"),
                                     ReadScriptFile("CreateCarTable"),
 												ReadScriptFile("CreateCompanyTable"),
 												ReadScriptFile("CreatePersonView")

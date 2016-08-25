@@ -10,7 +10,7 @@ namespace DapperExtensions.Test.IntegrationTests.SqlServer
     [TestFixture]
     public class TimerFixture
     {
-        private static int cnt = 1000;
+        private static int cnt = 10;
 
         public class InsertTimes : SqlServerBaseFixture
         {

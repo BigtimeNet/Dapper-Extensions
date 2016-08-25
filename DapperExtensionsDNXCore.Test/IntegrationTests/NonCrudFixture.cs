@@ -54,7 +54,6 @@ namespace DapperExtensions.Test.IntegrationTests
             }
 
             [Test]
-				[Ignore("ToDo: Externally mapped classes")]
             public void MappingClass_ReturnsFromDifferentAssembly()
             {
                 DapperExtensions.SetMappingAssemblies(new[] { typeof(ExternallyMappedMap).GetTypeInfo().Assembly });
@@ -63,7 +62,7 @@ namespace DapperExtensions.Test.IntegrationTests
 
                 DapperExtensions.SetMappingAssemblies(null);
                 mapper = DapperExtensions.GetMap<ExternallyMapped>();
-                Assert.AreEqual(typeof(AutoClassMapper<ExternallyMapped>), mapper.GetType());
+                Assert.AreNotEqual(typeof(AutoClassMapper<ExternallyMapped>), mapper.GetType());
             }
 
             private class EntityWithoutMapper

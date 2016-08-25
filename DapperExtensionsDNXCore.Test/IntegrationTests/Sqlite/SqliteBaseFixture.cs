@@ -42,6 +42,7 @@ namespace DapperExtensions.Test.IntegrationTests.Sqlite
                                     ReadScriptFile("CreateAnimalTable"),
                                     ReadScriptFile("CreateFooTable"),
                                     ReadScriptFile("CreateMultikeyTable"),
+												ReadScriptFile("CreateNullableTestClassTable"),
                                     ReadScriptFile("CreatePersonTable"),
                                     ReadScriptFile("CreateCarTable"),
 												ReadScriptFile("CreateCompanyTable"),

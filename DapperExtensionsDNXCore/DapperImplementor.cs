@@ -81,7 +81,7 @@ namespace DapperExtensions
             }
 
             IDictionary<string, object> keyValues = new ExpandoObject();
-            string sql = SqlGenerator.Insert(classMap);
+            string sql = SqlGenerator.Insert(classMap, entity);
             if (identityColumn != null)
             {
                 IEnumerable<long> result;

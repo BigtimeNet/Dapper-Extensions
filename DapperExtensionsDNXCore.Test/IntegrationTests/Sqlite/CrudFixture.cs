@@ -191,21 +191,22 @@ namespace DapperExtensions.Test.IntegrationTests.Sqlite
             }
 
             [Test]
-            [Ignore("")] //TODO: multikey identity
+				[Ignore("SQLLite doesnt support a composite key with both an IDENTITY column and a user-generated value.")]
             public void UsingCompositeKey_UpdatesEntity()
             {
-                Multikey m1 = new Multikey { Key2 = "key", Value = "bar" };
-                var key = Db.Insert(m1);
 
-                Multikey m2 = Db.Get<Multikey>(new { key.Key1, key.Key2 });
-                m2.Key2 = "key";
-                m2.Value = "barz";
-                Db.Update(m2);
+					Multikey m1 = new Multikey { Key1=1, Key2 = "key", Value = "bar" };
+               var key = Db.Insert(m1);
 
-                Multikey m3 = Db.Get<Multikey>(new { Key1 = 1, Key2 = "key" });
-                Assert.AreEqual(1, m3.Key1);
-                Assert.AreEqual("key", m3.Key2);
-                Assert.AreEqual("barz", m3.Value);
+               Multikey m2 = Db.Get<Multikey>(new { key.Key1, key.Key2 });
+               m2.Key2 = "key";
+               m2.Value = "barz";
+               Db.Update(m2);
+
+               Multikey m3 = Db.Get<Multikey>(new { Key1 = 2, Key2 = "key" });
+               Assert.AreEqual(1, m3.Key1);
+               Assert.AreEqual("key", m3.Key2);
+
             }
         }
 
@@ -383,7 +384,6 @@ namespace DapperExtensions.Test.IntegrationTests.Sqlite
         public class GetMultipleMethod : SqliteBaseFixture
         {
             [Test]
-				[Ignore("There is a know bug with read-multiple -- reading too much")]
             public void ReturnsItems()
             {
                 Db.Insert(new Person { Active = true, FirstName = "a", LastName = "a1", DateCreated = DateTime.UtcNow.AddDays(-10) });

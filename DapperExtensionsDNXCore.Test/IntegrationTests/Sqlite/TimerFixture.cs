@@ -9,7 +9,7 @@ namespace DapperExtensions.Test.IntegrationTests.Sqlite
     [TestFixture]
     public class TimerFixture
     {
-        private static int cnt = 1000;
+        private static int cnt = 10;
 
         public class InsertTimes : SqliteBaseFixture
         {
