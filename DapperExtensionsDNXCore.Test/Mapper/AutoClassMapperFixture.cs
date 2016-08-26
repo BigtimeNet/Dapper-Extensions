@@ -3,10 +3,40 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using DapperExtensions.Mapper;
+using DapperExtensions.Sql;
 using NUnit.Framework;
+using DapperExtensions;
 
 namespace DapperExtensions.Test.Mapper
 {
+
+	[TestFixture]
+	public class SQLUpdateOptions
+	{
+
+		private class AssignedIdItem {
+			public int SomeId { get; set; }
+			public int Id2 { get; set; }
+			public string Nm { get; set; }
+			public string Nm2 { get; set; }
+		}
+		private class AssignedIdItemMapper : ClassMapper<AssignedIdItem> {
+			public AssignedIdItemMapper() {
+				Map(m => m.SomeId).Key(KeyType.Assigned);
+				Map(m => m.Id2).Key(KeyType.Assigned);
+				AutoMap();
+			}
+		}
+
+		[Test]
+		public void SkipAssignFieldsTest() {
+		
+
+
+		}
+
+	}
+
     [TestFixture]
     public class AutoClassMapperFixture
     {

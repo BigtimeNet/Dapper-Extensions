@@ -26,10 +26,10 @@ namespace DapperExtensions {
 		dynamic Insert<T>(T entity, int? commandTimeout = null) where T : class;
 		Task InsertAsync<T>(IEnumerable<T> entities, DbTransaction transaction = null, int? commandTimeout = null) where T : class;
 		Task<dynamic> InsertAsync<T>(T entity, DbTransaction transaction = null, int? commandTimeout = null) where T : class;
-		bool Update<T>(T entity, DbTransaction transaction, int? commandTimeout = null) where T : class;
-		bool Update<T>(T entity, int? commandTimeout = null) where T : class;
-		Task<bool> UpdateAsync<T>(T entity, DbTransaction transaction, int? commandTimeout = null) where T : class;
-		Task<bool> UpdateAsync<T>(T entity, int? commandTimeout = null) where T : class;
+		bool Update<T>(T entity, DbTransaction transaction, int? commandTimeout = null, bool excludeAssignedKeys = false) where T : class;
+		bool Update<T>(T entity, int? commandTimeout = null, bool excludeAssignedKeys = false) where T : class;
+		Task<bool> UpdateAsync<T>(T entity, DbTransaction transaction, int? commandTimeout = null, bool excludeAssignedKeys = false) where T : class;
+		Task<bool> UpdateAsync<T>(T entity, int? commandTimeout = null, bool excludeAssignedKeys = false) where T : class;
 		bool Delete<T>(T entity, DbTransaction transaction, int? commandTimeout = null) where T : class;
 		bool Delete<T>(T entity, int? commandTimeout = null) where T : class;
 		bool Delete<T>(object predicate, DbTransaction transaction, int? commandTimeout = null) where T : class;
@@ -167,20 +167,20 @@ namespace DapperExtensions {
 			return _dapper.InsertAsync<T>(Connection, entity, transaction, commandTimeout);
 		}
 
-		public bool Update<T>(T entity, DbTransaction transaction, int? commandTimeout) where T : class {
-			return _dapper.Update<T>(Connection, entity, transaction, commandTimeout);
+		public bool Update<T>(T entity, DbTransaction transaction, int? commandTimeout, bool excludeAssignedKeys = false) where T : class {
+			return _dapper.Update<T>(Connection, entity, transaction, commandTimeout, excludeAssignedKeys);
 		}
 
-		public bool Update<T>(T entity, int? commandTimeout) where T : class {
-			return _dapper.Update<T>(Connection, entity, _transaction, commandTimeout);
+		public bool Update<T>(T entity, int? commandTimeout, bool excludeAssignedKeys = false) where T : class {
+			return _dapper.Update<T>(Connection, entity, _transaction, commandTimeout, excludeAssignedKeys);
 		}
 
-		public Task<bool> UpdateAsync<T>(T entity, DbTransaction transaction, int? commandTimeout = null) where T : class {
-			return _dapper.UpdateAsync<T>(Connection, entity, transaction, commandTimeout);
+		public Task<bool> UpdateAsync<T>(T entity, DbTransaction transaction, int? commandTimeout = null, bool excludeAssignedKeys = false) where T : class {
+			return _dapper.UpdateAsync<T>(Connection, entity, transaction, commandTimeout, excludeAssignedKeys);
 		}
 
-		public Task<bool> UpdateAsync<T>(T entity, int? commandTimeout = null) where T : class {
-			return _dapper.UpdateAsync<T>(Connection, entity, _transaction, commandTimeout);
+		public Task<bool> UpdateAsync<T>(T entity, int? commandTimeout = null, bool excludeAssignedKeys = false) where T : class {
+			return _dapper.UpdateAsync<T>(Connection, entity, _transaction, commandTimeout, excludeAssignedKeys);
 		}
 
 		public bool Delete<T>(T entity, DbTransaction transaction, int? commandTimeout = null) where T : class {

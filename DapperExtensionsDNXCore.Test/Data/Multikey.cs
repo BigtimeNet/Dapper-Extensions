@@ -10,7 +10,7 @@ namespace DapperExtensions.Test.Data
         public int Key1 { get; set; } 
         public string Key2 { get; set; }
         public string Value { get; set; }
-        //public DateTime Date { get; set; }
+        public DateTime Date { get; set; }
     }
 
     public class MultikeyMapper : ClassMapper<Multikey>
@@ -19,8 +19,28 @@ namespace DapperExtensions.Test.Data
         {
             Map(p => p.Key1).Key(KeyType.Identity);
             Map(p => p.Key2).Key(KeyType.Assigned);
-            //Map(p => p.Date).Ignore();
+            Map(p => p.Date).Ignore();
             AutoMap();
         }
     }
+
+	public class MultikeyLite {
+		public int Key1 { get; set; }
+		public string Key2 { get; set; }
+		public string Value { get; set; }
+		public DateTime Date { get; set; }
+	}
+
+	public class MultikeyLiteMapper : ClassMapper<MultikeyLite> {
+		public MultikeyLiteMapper()
+		{
+			TableName = "Multikey";
+			TableNameForSelect = "Multikey";
+			Map(p => p.Key1).Key(KeyType.Assigned);
+			Map(p => p.Key2).Key(KeyType.Assigned);
+			Map(p => p.Date).Ignore();
+			AutoMap();
+		}
+	}
+
 }

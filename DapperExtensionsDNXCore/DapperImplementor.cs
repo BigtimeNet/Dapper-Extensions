@@ -16,7 +16,7 @@ namespace DapperExtensions {
 		T Get<T>(IDbConnection connection, dynamic id, DbTransaction transaction, int? commandTimeout) where T : class;
 		void Insert<T>(IDbConnection connection, IEnumerable<T> entities, DbTransaction transaction, int? commandTimeout) where T : class;
 		dynamic Insert<T>(IDbConnection connection, T entity, DbTransaction transaction, int? commandTimeout) where T : class;
-		bool Update<T>(IDbConnection connection, T entity, DbTransaction transaction, int? commandTimeout) where T : class;
+		bool Update<T>(IDbConnection connection, T entity, DbTransaction transaction, int? commandTimeout, bool excludeAssignedKeys = false) where T : class;
 		bool Delete<T>(IDbConnection connection, T entity, DbTransaction transaction, int? commandTimeout) where T : class;
 		bool Delete<T>(IDbConnection connection, object predicate, DbTransaction transaction, int? commandTimeout) where T : class;
 		IEnumerable<T> GetList<T>(IDbConnection connection, object predicate, IList<ISort> sort, DbTransaction transaction, int? commandTimeout, bool buffered) where T : class;
@@ -32,7 +32,7 @@ namespace DapperExtensions {
 		Task<int> CountAsync<T>(IDbConnection connection, object predicate = null, IDbTransaction transaction = null, int? commandTimeout = null) where T : class;
 		Task InsertAsync<T>(IDbConnection connection, IEnumerable<T> entities, DbTransaction transaction, int? commandTimeout) where T : class;
 		Task<dynamic> InsertAsync<T>(IDbConnection connection, T entity, DbTransaction transaction, int? commandTimeout) where T : class;
-		Task<bool> UpdateAsync<T>(IDbConnection connection, T entity, DbTransaction transaction, int? commandTimeout) where T : class;
+		Task<bool> UpdateAsync<T>(IDbConnection connection, T entity, DbTransaction transaction, int? commandTimeout, bool excludeAssignedKeys = false) where T : class;
 		Task<bool> DeleteAsync<T>(IDbConnection connection, T entity, DbTransaction transaction, int? commandTimeout) where T : class;
 		Task<bool> DeleteAsync<T>(IDbConnection connection, object predicate, DbTransaction transaction, int? commandTimeout) where T : class;
 
@@ -114,14 +114,21 @@ namespace DapperExtensions {
 
 		}
 
-		public bool Update<T>(IDbConnection connection, T entity, DbTransaction transaction, int? commandTimeout) where T : class {
+		public bool Update<T>(IDbConnection connection, T entity, DbTransaction transaction, int? commandTimeout, bool excludeAssignedKeys = false) where T : class {
 			IClassMapper classMap = SqlGenerator.Configuration.GetMap<T>();
 			IPredicate predicate = GetKeyPredicate<T>(classMap, entity);
 			Dictionary<string, object> parameters = new Dictionary<string, object>();
-			string sql = SqlGenerator.Update(classMap, predicate, parameters);
+			string sql = SqlGenerator.Update(classMap, predicate, parameters, excludeAssignedKeys);
 			DynamicParameters dynamicParameters = new DynamicParameters();
 
-			var columns = classMap.Properties.Where(p => !(p.Ignored || p.IsReadOnly || p.KeyType == KeyType.Identity));
+			//Columns to update are the columns that are NOT ignored, readOnly or identity
+			//AND, if ExcludeAssignedKeys = true, then also columns that are KeyType assigned.
+			var columns = classMap.Properties.Where(p => !(
+				p.Ignored || 
+				p.IsReadOnly || 
+				p.KeyType == KeyType.Identity || 
+				(excludeAssignedKeys && p.KeyType==KeyType.Assigned)
+			));
 			foreach (var property in ReflectionHelper.GetObjectValues(entity).Where(property => columns.Any(c => c.Name == property.Key))) {
 				dynamicParameters.Add(property.Key, property.Value);
 			}
@@ -311,14 +318,14 @@ namespace DapperExtensions {
 
 		}
 
-		public async Task<bool> UpdateAsync<T>(IDbConnection connection, T entity, DbTransaction transaction, int? commandTimeout) where T : class {
+		public async Task<bool> UpdateAsync<T>(IDbConnection connection, T entity, DbTransaction transaction, int? commandTimeout, bool excludeAssignedKeys = false) where T : class {
 			IClassMapper classMap = SqlGenerator.Configuration.GetMap<T>();
 			IPredicate predicate = GetKeyPredicate<T>(classMap, entity);
 			Dictionary<string, object> parameters = new Dictionary<string, object>();
-			string sql = SqlGenerator.Update(classMap, predicate, parameters);
+			string sql = SqlGenerator.Update(classMap, predicate, parameters, excludeAssignedKeys);
 			DynamicParameters dynamicParameters = new DynamicParameters();
 
-			var columns = classMap.Properties.Where(p => !(p.Ignored || p.IsReadOnly || p.KeyType == KeyType.Identity));
+			var columns = classMap.Properties.Where(p => !(p.Ignored || p.IsReadOnly || p.KeyType == KeyType.Identity || (excludeAssignedKeys && p.KeyType==KeyType.Assigned)));
 			foreach (var property in ReflectionHelper.GetObjectValues(entity).Where(property => columns.Any(c => c.Name == property.Key))) {
 				dynamicParameters.Add(property.Key, property.Value);
 			}

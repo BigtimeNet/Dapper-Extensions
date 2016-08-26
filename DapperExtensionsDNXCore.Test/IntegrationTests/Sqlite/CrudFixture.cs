@@ -191,19 +191,21 @@ namespace DapperExtensions.Test.IntegrationTests.Sqlite
             }
 
             [Test]
-				[Ignore("SQLLite doesnt support a composite key with both an IDENTITY column and a user-generated value.")]
             public void UsingCompositeKey_UpdatesEntity()
             {
 
-					Multikey m1 = new Multikey { Key1=1, Key2 = "key", Value = "bar" };
+					MultikeyLite m1 = new MultikeyLite { Key1=1, Key2 = "2", Value = "bar" };
                var key = Db.Insert(m1);
 
-               Multikey m2 = Db.Get<Multikey>(new { key.Key1, key.Key2 });
-               m2.Key2 = "key";
+					MultikeyLite m2 = Db.Get<MultikeyLite>(new { key.Key1, key.Key2 });
                m2.Value = "barz";
-               Db.Update(m2);
+               Db.Update(m2,null,true);
 
-               Multikey m3 = Db.Get<Multikey>(new { Key1 = 2, Key2 = "key" });
+					MultikeyLite m2a = Db.Get<MultikeyLite>(new { key.Key1, key.Key2 });
+	            Assert.IsNotNull(m2a);
+	            Assert.AreEqual(m2.Value, m2a.Value);
+
+					MultikeyLite m3 = Db.Get<MultikeyLite>(new { Key1 = 2, Key2 = "key" });
                Assert.AreEqual(1, m3.Key1);
                Assert.AreEqual("key", m3.Key2);
 
