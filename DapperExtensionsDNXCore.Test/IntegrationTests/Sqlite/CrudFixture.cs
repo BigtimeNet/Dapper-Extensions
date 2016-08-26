@@ -205,9 +205,9 @@ namespace DapperExtensions.Test.IntegrationTests.Sqlite
 	            Assert.IsNotNull(m2a);
 	            Assert.AreEqual(m2.Value, m2a.Value);
 
-					MultikeyLite m3 = Db.Get<MultikeyLite>(new { Key1 = 2, Key2 = "key" });
+					MultikeyLite m3 = Db.Get<MultikeyLite>(new { Key1 = 1, Key2 = "2" });
                Assert.AreEqual(1, m3.Key1);
-               Assert.AreEqual("key", m3.Key2);
+               Assert.AreEqual("2", m3.Key2);
 
             }
         }

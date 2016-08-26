@@ -150,7 +150,16 @@ namespace DapperExtensions.Mapper
             return result;
         }
 
-        private void GuardForDuplicatePropertyMap(PropertyMap result)
+			/// <summary>
+			/// Removes a propertymap entry
+			/// </summary>
+			protected void UnMap(Expression<Func<T, object>> expression) {
+				var propertyInfo = ReflectionHelper.GetProperty(expression) as PropertyInfo;
+				var mapping = this.Properties.Where(w => w.Name == propertyInfo.Name).SingleOrDefault();
+				if (mapping != null) { this.Properties.Remove(mapping); }
+			}
+
+			private void GuardForDuplicatePropertyMap(PropertyMap result)
         {
             if (Properties.Any(p => p.Name.Equals(result.Name)))
             {
