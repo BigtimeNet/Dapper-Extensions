@@ -23,6 +23,7 @@ namespace DapperExtensions.Test.Data {
 		public PersonMapper() {
 			Table("Person", "PersonView");
 			Map(m => m.Phones).Ignore();
+			Map(m => m.Id).Key(KeyType.Identity);
 			Map(m => m.CompanyNm).ReadOnly();
 			AutoMap();
 		}

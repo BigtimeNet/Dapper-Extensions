@@ -15,7 +15,7 @@ namespace DapperExtensions.Test.IntegrationTests.SqlServer {
 			//StringVal2, NullableDtVal, NullableIntVal and NullableEnumVal are all NULL
 			var SampleItem = new Data.NullableTestClass { StringVal = "TestValue", DTVal = DateTime.Now, EnumVal = ETestEnum.First };
 
-			int newId = Db.Insert(SampleItem);
+			int newId = (int)Db.Insert(SampleItem);
 			Assert.AreNotEqual(0, newId);
 
 			var readSampleItem = Db.Get<NullableTestClass>(newId);

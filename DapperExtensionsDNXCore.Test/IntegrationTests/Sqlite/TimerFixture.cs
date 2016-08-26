@@ -66,7 +66,7 @@ namespace DapperExtensions.Test.IntegrationTests.Sqlite
                                         DateCreated = DateTime.Now,
                                         Active = true
                                     };
-                    var id = Db.Insert(p2);
+                    var id = (int)Db.Insert(p2);
                     ids.Add(id);
                 }
 

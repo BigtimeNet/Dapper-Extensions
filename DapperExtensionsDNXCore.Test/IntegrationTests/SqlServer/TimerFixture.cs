@@ -67,7 +67,7 @@ namespace DapperExtensions.Test.IntegrationTests.SqlServer
                                         DateCreated = DateTime.Now,
                                         Active = true
                                     };
-                    var id = Db.Insert(p2);
+                    var id = (int)Db.Insert(p2);
                     ids.Add(id);
                 }
 
@@ -105,7 +105,7 @@ namespace DapperExtensions.Test.IntegrationTests.SqlServer
                 for (int i = 0; i < cnt; i++)
                 {
                     Animal a2 = new Animal { Name = "Name" + i };
-                    var id = Db.Insert(a2);
+                    var id = (int)Db.Insert(a2);
                     ids.Add(id);
                 }
 

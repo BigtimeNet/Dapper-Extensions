@@ -7,6 +7,7 @@ using System.Text;
 using DapperExtensions.Sql;
 using DapperExtensions.Mapper;
 using System.Data.Common;
+using System.Threading.Tasks;
 
 namespace DapperExtensions
 {
@@ -261,5 +262,44 @@ namespace DapperExtensions
         {
             return Instance.SqlGenerator.Configuration.GetNextGuid();
         }
-    }
+
+		/// <summary>
+		/// Executes a query using the specified predicate, returning an integer that represents the number of rows that match the query.
+		/// </summary>
+		public static Task<int> CountAsync<T>(this IDbConnection connection, object predicate = null, IDbTransaction transaction = null, int? commandTimeout = null) where T : class {
+			return Instance.CountAsync<T>(connection, predicate, transaction, commandTimeout);
+		}
+
+		/// <summary>
+		/// Executes a query for the specified id, returning the data typed as per T.
+		/// </summary>
+		public static Task<T> GetAsync<T>(this IDbConnection connection, dynamic id, IDbTransaction transaction = null, int? commandTimeout = null) where T : class {
+			return Instance.GetAsync<T>(connection, id, transaction, commandTimeout);
+		}
+
+		/// <summary>
+		/// Executes a select query using the specified predicate, returning an IEnumerable data typed as per T.
+		/// </summary>
+		public static Task<IEnumerable<T>> GetListAsync<T>(this IDbConnection connection, object predicate = null, IList<ISort> sort = null, IDbTransaction transaction = null, int? commandTimeout = null) where T : class {
+			return Instance.GetListAsync<T>(connection, predicate, sort, transaction, commandTimeout);
+		}
+
+		/// <summary>
+		/// Executes a select query using the specified predicate, returning an IEnumerable data typed as per T.
+		/// Data returned is dependent upon the specified page and resultsPerPage.
+		/// </summary>
+		public static Task<IEnumerable<T>> GetPageAsync<T>(this IDbConnection connection, object predicate = null, IList<ISort> sort = null, int page = 1, int resultsPerPage = 10, IDbTransaction transaction = null, int? commandTimeout = null) where T : class {
+			return Instance.GetPageAsync<T>(connection, predicate, sort, page, resultsPerPage, transaction, commandTimeout);
+		}
+
+
+		/// <summary>
+		/// Executes a select query using the specified predicate, returning an IEnumerable data typed as per T.
+		/// Data returned is dependent upon the specified firstResult and maxResults.
+		/// </summary>
+		public static Task<IEnumerable<T>> GetSetAsync<T>(this IDbConnection connection, object predicate = null, IList<ISort> sort = null, int firstResult = 1, int maxResults = 10, IDbTransaction transaction = null, int? commandTimeout = null) where T : class {
+			return Instance.GetSetAsync<T>(connection, predicate, sort, firstResult, maxResults, transaction, commandTimeout);
+		}
+
+	}
 }
