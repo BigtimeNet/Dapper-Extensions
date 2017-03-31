@@ -7,43 +7,56 @@ using DapperExtensions.Mapper;
 using System.Reflection;
 using Dapper;
 
-namespace DapperExtensions.Mapper {
+namespace DapperExtensions.Mapper
+{
 
-	public class AttributeBasedMapper<T> : ClassMapper<T> where T : class {
+	public class AttributeBasedMapper<T> : ClassMapper<T> where T : class
+	{
 
-		public AttributeBasedMapper() {
+		public AttributeBasedMapper()
+		{
 
 			Type type = typeof(T);
 
 			//Table Attribute
-			if (type.GetTypeInfo().GetCustomAttributes(true).Any(attr => attr.GetType().Name == typeof(TableAttribute).Name)) {
+			if (type.GetTypeInfo().GetCustomAttributes(true).Any(attr => attr.GetType().Name == typeof(TableAttribute).Name))
+			{
 				var tn = ((TableAttribute)type.GetTypeInfo().GetCustomAttributes(true).FirstOrDefault(attr => attr.GetType().Name == typeof(TableAttribute).Name)).Name;
 				if (tn != "") { TableName = tn; }
 				var sn = ((TableAttribute)type.GetTypeInfo().GetCustomAttributes(true).FirstOrDefault(attr => attr.GetType().Name == typeof(TableAttribute).Name)).Schema;
 				if (sn != "") { Schema(sn); }
 				var selN = ((TableAttribute)type.GetTypeInfo().GetCustomAttributes(true).FirstOrDefault(attr => attr.GetType().Name == typeof(TableAttribute).Name)).NameForSelect;
-				if (selN != null && selN != "") { TableNameForSelect = selN; }
+				if (selN != null && selN != "") { TableNameForSelect = selN; } else
+				{
+					if (tn != "") TableNameForSelect = tn;
+				}
 			}
 
-			foreach (var property in type.GetProperties()) {
+			foreach (var property in type.GetProperties())
+			{
 				PropertyMap myPM = null;
 				//KeyAttribute 
-				if (property.GetCustomAttributes(true).Any(attr => attr.GetType().Name == typeof(KeyAttribute).Name)) {
+				if (property.GetCustomAttributes(true).Any(attr => attr.GetType().Name == typeof(KeyAttribute).Name))
+				{
 					var propertyKeyType = ((KeyAttribute)property.GetCustomAttributes(true).FirstOrDefault(attr => attr.GetType().Name == typeof(KeyAttribute).Name)).KeyType;
 					myPM = Map(property).Key(propertyKeyType);
 				}
 				//ColumnAttribute 
-				if (property.GetCustomAttributes(true).Any(attr => attr.GetType().Name == typeof(ColumnAttribute).Name)) {
+				if (property.GetCustomAttributes(true).Any(attr => attr.GetType().Name == typeof(ColumnAttribute).Name))
+				{
 					var colName = ((ColumnAttribute)property.GetCustomAttributes(true).FirstOrDefault(attr => attr.GetType().Name == typeof(ColumnAttribute).Name)).Name;
-					if (colName != null && colName.Trim() != "") {
+					if (colName != null && colName.Trim() != "")
+					{
 						if (myPM == null) { myPM = Map(property); }
 						myPM.Column(colName);
 					}
 				}
 				//ReadOnly attribute (ignore insert/updates)
-				if (property.GetCustomAttributes(true).Any(attr => attr.GetType().Name == typeof(ReadOnlyAttribute).Name)) {
+				if (property.GetCustomAttributes(true).Any(attr => attr.GetType().Name == typeof(ReadOnlyAttribute).Name))
+				{
 					var readOnly = ((ReadOnlyAttribute)property.GetCustomAttributes(true).FirstOrDefault(attr => attr.GetType().Name == typeof(ReadOnlyAttribute).Name)).IsReadOnly;
-					if (readOnly) {
+					if (readOnly)
+					{
 						if (myPM == null) { myPM = Map(property); }
 						myPM.ReadOnly();
 					}
@@ -55,7 +68,8 @@ namespace DapperExtensions.Mapper {
 
 		}
 
-		private string GetTableName() {
+		private string GetTableName()
+		{
 			return "";
 		}
 
@@ -63,20 +77,23 @@ namespace DapperExtensions.Mapper {
 }
 
 
-namespace Dapper {
+namespace Dapper
+{
 
 	/// <summary>
 	/// Optional Table attribute.
 	/// You can use the System.ComponentModel.DataAnnotations version in its place to specify the table name of a poco
 	/// </summary>
 	[AttributeUsage(AttributeTargets.Class)]
-	public class TableAttribute : Attribute {
+	public class TableAttribute : Attribute
+	{
 		/// <summary>
 		/// Optional Table attribute.
 		/// </summary>
 		/// <param name="tableName"></param>
 		/// <param name="tableNameForSelect">If the object uses a query for SELECT, pass the query name here.</param>
-		public TableAttribute(string tableName, string tableNameForSelect = "") {
+		public TableAttribute(string tableName, string tableNameForSelect = "")
+		{
 			Name = tableName;
 			NameForSelect = tableNameForSelect;
 		}
@@ -98,8 +115,10 @@ namespace Dapper {
 	/// Optional Key attribute.  By default, Key attributes are Identity, but you can specify other types.
 	/// </summary>
 	[AttributeUsage(AttributeTargets.Property)]
-	public class KeyAttribute : Attribute {
-		public KeyAttribute(KeyType KeyType = KeyType.Identity) {
+	public class KeyAttribute : Attribute
+	{
+		public KeyAttribute(KeyType KeyType = KeyType.Identity)
+		{
 			this.KeyType = KeyType;
 		}
 		public KeyType KeyType { get; set; }
@@ -110,8 +129,10 @@ namespace Dapper {
 	/// You can use the System.ComponentModel.DataAnnotations version in its place to specify the table name of a poco
 	/// </summary>
 	[AttributeUsage(AttributeTargets.Property)]
-	public class ColumnAttribute : Attribute {
-		public ColumnAttribute(string columnName) {
+	public class ColumnAttribute : Attribute
+	{
+		public ColumnAttribute(string columnName)
+		{
 			Name = columnName;
 		}
 		/// Name of the column
@@ -123,12 +144,14 @@ namespace Dapper {
 	/// You can use the System.ComponentModel version in its place to specify the properties that are editable
 	/// </summary>
 	[AttributeUsage(AttributeTargets.Property)]
-	public class ReadOnlyAttribute : Attribute {
+	public class ReadOnlyAttribute : Attribute
+	{
 		/// <summary>
 		/// Optional ReadOnly attribute.
 		/// </summary>
 		/// <param name="isReadOnly"></param>
-		public ReadOnlyAttribute(bool isReadOnly) {
+		public ReadOnlyAttribute(bool isReadOnly)
+		{
 			IsReadOnly = isReadOnly;
 		}
 		/// <summary>

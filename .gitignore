@@ -1,16 +1,28 @@
-# User-specific files
-*.user
 *.suo
+.vs/
+*.user
+**/**/project.lock.json
+bin
+obj
+*.min.*
+*.dbmdl
+*.jfm
+/packages
+/src/packages
 
-# Build
-[Bb]in
-[Oo]bj
-*.xap
-[Pp]ublish
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
 
 # Other files
 *.dotCover
 _ReSharper.*
 StyleCop.*
-/.vs
-project.lock.json
