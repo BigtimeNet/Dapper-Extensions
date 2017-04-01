@@ -41,8 +41,8 @@ namespace DapperExtensions.Test.IntegrationTests.SqlServer
                 }
 
                 double total = DateTime.Now.Subtract(start).TotalMilliseconds;
-                Console.WriteLine("Total Time:" + total);
-                Console.WriteLine("Average Time:" + total / cnt);
+                Console.WriteLine("SQLServer insert+identity Total Time:" + total);
+                Console.WriteLine("SQLServer insert+identity Average Time:" + total / cnt);
             }
 
             [Test]
@@ -72,8 +72,8 @@ namespace DapperExtensions.Test.IntegrationTests.SqlServer
                 }
 
                 double total = DateTime.Now.Subtract(start).TotalMilliseconds;
-                Console.WriteLine("Total Time:" + total);
-                Console.WriteLine("Average Time:" + total / cnt);
+                Console.WriteLine("SQLServer Identity insert2 Total Time:" + total);
+                Console.WriteLine("SQLServer Identity insert2 Average Time:" + total / cnt);
             }
 
             [Test]
@@ -91,8 +91,8 @@ namespace DapperExtensions.Test.IntegrationTests.SqlServer
                 }
 
                 double total = DateTime.Now.Subtract(start).TotalMilliseconds;
-                Console.WriteLine("Total Time:" + total);
-                Console.WriteLine("Average Time:" + total / cnt);
+                Console.WriteLine("SQLServer GUID insert Total Time:" + total);
+                Console.WriteLine("SQLServer GUID insert Average Time:" + total / cnt);
             }
 
             [Test]
@@ -110,8 +110,8 @@ namespace DapperExtensions.Test.IntegrationTests.SqlServer
                 }
 
                 double total = DateTime.Now.Subtract(start).TotalMilliseconds;
-                Console.WriteLine("Total Time:" + total);
-                Console.WriteLine("Average Time:" + total / cnt);
+                Console.WriteLine("SQLServer GUID get Total Time:" + total);
+                Console.WriteLine("SQLServer GUID get Average Time:" + total / cnt);
             }
 
             [Test]
@@ -130,8 +130,8 @@ namespace DapperExtensions.Test.IntegrationTests.SqlServer
                 }
 
                 double total = DateTime.Now.Subtract(start).TotalMilliseconds;
-                Console.WriteLine("Total Time:" + total);
-                Console.WriteLine("Average Time:" + total / cnt);
+                Console.WriteLine("SQLServer assign key Total Time:" + total);
+                Console.WriteLine("SQLServer assign key Average Time:" + total / cnt);
             }
 
             [Test]
@@ -150,8 +150,8 @@ namespace DapperExtensions.Test.IntegrationTests.SqlServer
                 }
 
                 double total = DateTime.Now.Subtract(start).TotalMilliseconds;
-                Console.WriteLine("Total Time:" + total);
-                Console.WriteLine("Average Time:" + total / cnt);
+                Console.WriteLine("SQLServer assign key2 Total Time:" + total);
+                Console.WriteLine("SQLServer assign key2 Average Time:" + total / cnt);
             }
         }
     }

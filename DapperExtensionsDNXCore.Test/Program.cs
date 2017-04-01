@@ -10,7 +10,8 @@ namespace DapperExtensionsDNXCore.Test
         public static int Main(string[] args)
         {
 			var result = new AutoRun(typeof(Program).GetTypeInfo().Assembly)
-							 .Execute(args, new ExtendedTextWrapper(Console.Out), Console.In);
+							 .Execute(args, new ExtendedTextWrapper(Console.Out), 
+							 Console.In);
 			Console.ReadKey();
 			return result;
 		}

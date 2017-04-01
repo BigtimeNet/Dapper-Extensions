@@ -40,8 +40,8 @@ namespace DapperExtensions.Test.IntegrationTests.Sqlite
                 }
 
                 double total = DateTime.Now.Subtract(start).TotalMilliseconds;
-                Console.WriteLine("Total Time:" + total);
-                Console.WriteLine("Average Time:" + total / cnt);
+                Console.WriteLine("SQLLite  insert+identity Total Time:" + total);
+                Console.WriteLine("SQLLite insert+identity insert SQLLite Average Time:" + total / cnt);
             }
 
             [Test]
@@ -71,8 +71,8 @@ namespace DapperExtensions.Test.IntegrationTests.Sqlite
                 }
 
                 double total = DateTime.Now.Subtract(start).TotalMilliseconds;
-                Console.WriteLine("Total Time:" + total);
-                Console.WriteLine("Average Time:" + total / cnt);
+                Console.WriteLine("SQLLite Identity insert2 Total Time:" + total);
+                Console.WriteLine("SQLLite Identity insert2 Average Time:" + total / cnt);
             }
 
             [Test]
@@ -90,8 +90,8 @@ namespace DapperExtensions.Test.IntegrationTests.Sqlite
                 }
 
                 double total = DateTime.Now.Subtract(start).TotalMilliseconds;
-                Console.WriteLine("Total Time:" + total);
-                Console.WriteLine("Average Time:" + total / cnt);
+                Console.WriteLine("SQLLite GUID insert Total Time:" + total);
+                Console.WriteLine("SQLLite GUID insert Average Time:" + total / cnt);
             }
 
             [Test]
@@ -109,8 +109,8 @@ namespace DapperExtensions.Test.IntegrationTests.Sqlite
                 }
 
                 double total = DateTime.Now.Subtract(start).TotalMilliseconds;
-                Console.WriteLine("Total Time:" + total);
-                Console.WriteLine("Average Time:" + total / cnt);
+                Console.WriteLine("SQLLite GUID get Total Time:" + total);
+                Console.WriteLine("SQLLite GUID get Average Time:" + total / cnt);
             }
 
             [Test]
@@ -129,8 +129,8 @@ namespace DapperExtensions.Test.IntegrationTests.Sqlite
                 }
 
                 double total = DateTime.Now.Subtract(start).TotalMilliseconds;
-                Console.WriteLine("Total Time:" + total);
-                Console.WriteLine("Average Time:" + total / cnt);
+                Console.WriteLine("SQLLite assign key Total Time:" + total);
+                Console.WriteLine("SQLLite assign key Average Time:" + total / cnt);
             }
 
             [Test]
@@ -149,8 +149,8 @@ namespace DapperExtensions.Test.IntegrationTests.Sqlite
                 }
 
                 double total = DateTime.Now.Subtract(start).TotalMilliseconds;
-                Console.WriteLine("Total Time:" + total);
-                Console.WriteLine("Average Time:" + total / cnt);
+                Console.WriteLine("SQLLite assign key2 Total Time:" + total);
+                Console.WriteLine("SQLLite assign key2 Average Time:" + total / cnt);
             }
         }
     }
