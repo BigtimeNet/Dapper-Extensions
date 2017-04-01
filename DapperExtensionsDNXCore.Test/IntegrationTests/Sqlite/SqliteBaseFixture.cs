@@ -100,7 +100,7 @@ namespace DapperExtensions.Test.IntegrationTests.Sqlite
         }
 
         public string ReadScriptFile(string name) {
-	        var SQLPath = System.IO.Path.Combine(System.AppContext.BaseDirectory, @"SQLFiles\SQLLite");
+	        var SQLPath = System.IO.Path.Combine(TestConfiguration.getBasePath(), @"SQLFiles\SQLLite");
 	        string fileName = System.IO.Path.Combine(SQLPath, name + ".sql");
 	        return System.IO.File.ReadAllText(fileName);
         }

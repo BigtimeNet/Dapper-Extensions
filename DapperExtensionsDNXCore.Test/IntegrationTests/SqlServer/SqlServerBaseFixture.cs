@@ -12,37 +12,47 @@ using NUnit.Framework;
 
 namespace DapperExtensions.Test.IntegrationTests.SqlServer
 {
-    public class SqlServerBaseFixture
-    {
-        protected IDatabase Db;
+	public class SqlServerBaseFixture
+	{
+		protected IDatabase Db;
 
-        [SetUp]
-        public virtual void Setup()
-        {
-            var connection = new SqlConnection("Integrated Security=SSPI;Initial Catalog=DapperExtTests;Data Source=(local);");
-            var config = new DapperExtensionsConfiguration(typeof(AutoClassMapper<>), new List<Assembly>(), new SqlServerDialect());
-            var sqlGenerator = new SqlGeneratorImpl(config);
-            Db = new Database(connection, sqlGenerator);
-            var files = new List<string>
-                                {
-                                    ReadScriptFile("CreateAnimalTable"),
-                                    ReadScriptFile("CreateFooTable"),
+		[SetUp]
+		public virtual void Setup()
+		{
+			var connectString = "";
+			var connectStringSetting = TestConfiguration.GetConfiguration().GetSection("ConnectionStrings").GetChildren().FirstOrDefault(x => x.Key == "SQLServer");
+			if (connectStringSetting != null) { connectString = connectStringSetting.Value; }
+
+			if(connectString =="") {
+				Assert.Inconclusive("There is no SQL server connection string in appsettings.json for this test project.");
+				return;
+			}
+
+			var connection = new SqlConnection(connectString);
+			var config = new DapperExtensionsConfiguration(typeof(AutoClassMapper<>), new List<Assembly>(), new SqlServerDialect());
+			var sqlGenerator = new SqlGeneratorImpl(config);
+			Db = new Database(connection, sqlGenerator);
+			var files = new List<string>
+										  {
+												ReadScriptFile("CreateAnimalTable"),
+												ReadScriptFile("CreateFooTable"),
 												ReadScriptFile("CreateMultikeyTable"),
 												ReadScriptFile("CreateNullableTestClassTable"),
 												ReadScriptFile("CreatePersonTable"),
-                                    ReadScriptFile("CreateCarTable"),
+												ReadScriptFile("CreateCarTable"),
 												ReadScriptFile("CreateCompanyTable"),
 												ReadScriptFile("CreatePersonView")
 										  };
 
-            foreach (var setupFile in files)
-            {
-                connection.Execute(setupFile);
-            }
-        }
+			foreach (var setupFile in files)
+			{
+				connection.Execute(setupFile);
+			}
+		}
 
-        public string ReadScriptFile(string name) {
-			var SQLPath = System.IO.Path.Combine(System.AppContext.BaseDirectory, @"SQLFiles\SQLServer");
+		public string ReadScriptFile(string name)
+		{
+			var SQLPath = System.IO.Path.Combine(TestConfiguration.getBasePath(), @"SQLFiles\SQLServer");
 			string fileName = System.IO.Path.Combine(SQLPath, name + ".sql");
 			return System.IO.File.ReadAllText(fileName);
 		}
