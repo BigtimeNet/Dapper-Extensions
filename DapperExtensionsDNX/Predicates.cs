@@ -208,7 +208,13 @@ namespace DapperExtensions {
 		}
 	}
 
-	public struct BetweenValues {
+	public class BetweenValues {
+		public BetweenValues() { }
+		public BetweenValues(object low, object high)
+		{
+			Value1 = low;
+			Value2 = high;
+		}
 		public object Value1 { get; set; }
 		public object Value2 { get; set; }
 	}
@@ -222,6 +228,10 @@ namespace DapperExtensions {
 
 	public class BetweenPredicate<T> : BasePredicate, IBetweenPredicate
 		 where T : class {
+
+		public BetweenPredicate() {
+			Value = new BetweenValues();
+		}
 		public override string GetSql(ISqlGenerator sqlGenerator, IDictionary<string, object> parameters) {
 			string columnName = GetColumnName(typeof(T), sqlGenerator, PropertyName);
 			string propertyName1 = parameters.SetParameterName(this.PropertyName, this.Value.Value1, sqlGenerator.Configuration.Dialect.ParameterPrefix);
