@@ -62,10 +62,17 @@ namespace DapperExtensions {
 		/// <param name="predicate">A list of predicates to group.</param>
 		/// <returns>An instance of IPredicateGroup.</returns>
 		public static IPredicateGroup Group(GroupOperator op, params IPredicate[] predicate) {
-			return new PredicateGroup {
-				Operator = op,
-				Predicates = predicate
-			};
+			if (predicate == null) {
+				return new PredicateGroup { Operator = op };
+			} 
+			else
+			{
+				return new PredicateGroup
+				{
+					Operator = op,
+					Predicates = new List<IPredicate>(predicate)
+				};
+			}
 		}
 
 		/// <summary>
@@ -297,6 +304,10 @@ namespace DapperExtensions {
 		public IList<IPredicate> Predicates { get; set; }
 		public string GetSql(ISqlGenerator sqlGenerator, IDictionary<string, object> parameters) {
 			string seperator = Operator == GroupOperator.And ? " AND " : " OR ";
+
+			if (Predicates.Count == 0) { return $"({sqlGenerator.Configuration.Dialect.EmptyExpression})"; }
+			if (Predicates.Count == 1) { return Predicates[0].GetSql(sqlGenerator,parameters); }
+
 			return "(" + Predicates.Aggregate(new StringBuilder(),
 												 (sb, p) => (sb.Length == 0 ? sb : sb.Append(seperator)).Append(p.GetSql(sqlGenerator, parameters)),
 				 sb => {

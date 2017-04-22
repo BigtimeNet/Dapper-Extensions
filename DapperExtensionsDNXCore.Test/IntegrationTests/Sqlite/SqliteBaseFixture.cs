@@ -34,9 +34,10 @@ namespace DapperExtensions.Test.IntegrationTests.Sqlite
 
 				SqliteConnection connection = new SqliteConnection(connectionString);
             var config = new DapperExtensionsConfiguration(typeof(AutoClassMapper<>), new List<Assembly>(), new SqliteDialect());
+				
             var sqlGenerator = new SqlGeneratorImpl(config);
-            Db = new Database(connection, sqlGenerator);
-
+            Db = new Database(connection, sqlGenerator, new ConsoleLogger());
+			
             var files = new List<string>
                                 {
                                     ReadScriptFile("CreateAnimalTable"),

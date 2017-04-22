@@ -31,7 +31,7 @@ namespace DapperExtensions.Test.IntegrationTests.SqlServer
 			var connection = new SqlConnection(connectString);
 			var config = new DapperExtensionsConfiguration(typeof(AutoClassMapper<>), new List<Assembly>(), new SqlServerDialect());
 			var sqlGenerator = new SqlGeneratorImpl(config);
-			Db = new Database(connection, sqlGenerator);
+			Db = new Database(connection, sqlGenerator, new ConsoleLogger());
 			var files = new List<string>
 										  {
 												ReadScriptFile("CreateAnimalTable"),
