@@ -15,7 +15,7 @@
 		"Microsoft.Extensions.Configuration.Json": "1.1.1",
 				"DapperExtensionsDNX": {
 					"target": "project",
-					"version": "1.1.0"
+					"version": "1.1.2"
 				},
 				"NSubstitute": "2.0.2"
 	},
