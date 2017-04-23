@@ -9,6 +9,7 @@ using DapperExtensions.Mapper;
 using DapperExtensions.Sql;
 using System.Data.Common;
 using System.Threading.Tasks;
+using DapperExtensions.Logger;
 
 namespace DapperExtensions
 {

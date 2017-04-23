@@ -65,7 +65,7 @@ namespace DapperExtensions
 
 		private DbTransaction _transaction;
 
-		public Database(DbConnection connection, ISqlGenerator sqlGenerator, ILog logger)
+		public Database(DbConnection connection, ISqlGenerator sqlGenerator, Logger.ILog logger)
 		{
 			_dapper = new DapperImplementor(sqlGenerator);
 			_dapper.Logger = logger;

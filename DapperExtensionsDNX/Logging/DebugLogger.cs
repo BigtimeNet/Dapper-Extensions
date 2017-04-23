@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using DapperExtensions;
-using System.Diagnostics;
 
-namespace DapperExtensions.Test.IntegrationTests
+namespace DapperExtensions.Logger
 {
-	public class ConsoleLogger : Logging.ILog
+	public class DebugLogger : ILog
 	{
 		public void Log(string logEntry, Exception ex = null)
 		{
-			Console.WriteLine(logEntry);
 			Debug.WriteLine(logEntry);
 		}
 	}

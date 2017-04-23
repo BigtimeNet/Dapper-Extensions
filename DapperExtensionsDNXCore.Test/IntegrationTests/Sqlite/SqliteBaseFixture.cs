@@ -36,7 +36,7 @@ namespace DapperExtensions.Test.IntegrationTests.Sqlite
             var config = new DapperExtensionsConfiguration(typeof(AutoClassMapper<>), new List<Assembly>(), new SqliteDialect());
 				
             var sqlGenerator = new SqlGeneratorImpl(config);
-            Db = new Database(connection, sqlGenerator, new ConsoleLogger());
+            Db = new Database(connection, sqlGenerator, new Logger.DebugLogger());
 			
             var files = new List<string>
                                 {
