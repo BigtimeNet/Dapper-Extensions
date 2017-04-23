@@ -62,10 +62,17 @@ namespace DapperExtensions {
 		/// <param name="predicate">A list of predicates to group.</param>
 		/// <returns>An instance of IPredicateGroup.</returns>
 		public static IPredicateGroup Group(GroupOperator op, params IPredicate[] predicate) {
-			return new PredicateGroup {
-				Operator = op,
-				Predicates = predicate
-			};
+			if (predicate == null) {
+				return new PredicateGroup { Operator = op };
+			} 
+			else
+			{
+				return new PredicateGroup
+				{
+					Operator = op,
+					Predicates = new List<IPredicate>(predicate)
+				};
+			}
 		}
 
 		/// <summary>
@@ -208,7 +215,13 @@ namespace DapperExtensions {
 		}
 	}
 
-	public struct BetweenValues {
+	public class BetweenValues {
+		public BetweenValues() { }
+		public BetweenValues(object low, object high)
+		{
+			Value1 = low;
+			Value2 = high;
+		}
 		public object Value1 { get; set; }
 		public object Value2 { get; set; }
 	}
@@ -222,6 +235,10 @@ namespace DapperExtensions {
 
 	public class BetweenPredicate<T> : BasePredicate, IBetweenPredicate
 		 where T : class {
+
+		public BetweenPredicate() {
+			Value = new BetweenValues();
+		}
 		public override string GetSql(ISqlGenerator sqlGenerator, IDictionary<string, object> parameters) {
 			string columnName = GetColumnName(typeof(T), sqlGenerator, PropertyName);
 			string propertyName1 = parameters.SetParameterName(this.PropertyName, this.Value.Value1, sqlGenerator.Configuration.Dialect.ParameterPrefix);
@@ -287,6 +304,10 @@ namespace DapperExtensions {
 		public IList<IPredicate> Predicates { get; set; }
 		public string GetSql(ISqlGenerator sqlGenerator, IDictionary<string, object> parameters) {
 			string seperator = Operator == GroupOperator.And ? " AND " : " OR ";
+
+			if (Predicates.Count == 0) { return $"({sqlGenerator.Configuration.Dialect.EmptyExpression})"; }
+			if (Predicates.Count == 1) { return Predicates[0].GetSql(sqlGenerator,parameters); }
+
 			return "(" + Predicates.Aggregate(new StringBuilder(),
 												 (sb, p) => (sb.Length == 0 ? sb : sb.Append(seperator)).Append(p.GetSql(sqlGenerator, parameters)),
 				 sb => {

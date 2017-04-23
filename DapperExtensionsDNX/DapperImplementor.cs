@@ -9,12 +9,14 @@ using DapperExtensions.Mapper;
 using DapperExtensions.Sql;
 using System.Data.Common;
 using System.Threading.Tasks;
+using DapperExtensions.Logger;
 
 namespace DapperExtensions
 {
 	public interface IDapperImplementor
 	{
 		ISqlGenerator SqlGenerator { get; }
+		ILog Logger { get; set; }
 		T Get<T>(IDbConnection connection, dynamic id, DbTransaction transaction, int? commandTimeout) where T : class;
 		void Insert<T>(IDbConnection connection, IEnumerable<T> entities, DbTransaction transaction, int? commandTimeout) where T : class;
 		dynamic Insert<T>(IDbConnection connection, T entity, DbTransaction transaction, int? commandTimeout) where T : class;
@@ -48,6 +50,7 @@ namespace DapperExtensions
 		}
 
 		public ISqlGenerator SqlGenerator { get; private set; }
+		public ILog Logger { get; set; }
 
 		public T Get<T>(IDbConnection connection, dynamic id, DbTransaction transaction, int? commandTimeout) where T : class
 		{
@@ -73,6 +76,7 @@ namespace DapperExtensions
 				}
 			}
 			string sql = SqlGenerator.Insert(classMap);
+			if (this.Logger != null) { this.Logger.Log(sql); }
 			connection.Execute(sql, entities, transaction, commandTimeout, CommandType.Text);
 		}
 
@@ -98,11 +102,14 @@ namespace DapperExtensions
 				if (SqlGenerator.SupportsMultipleStatements())
 				{
 					sql += SqlGenerator.Configuration.Dialect.BatchSeperator + SqlGenerator.IdentitySql(classMap);
+					if (this.Logger != null) { this.Logger.Log(sql); }
 					result = connection.Query<long>(sql, entity, transaction, false, commandTimeout, CommandType.Text);
 				} else
 				{
+					if (this.Logger != null) { this.Logger.Log(sql); }
 					connection.Execute(sql, entity, transaction, commandTimeout, CommandType.Text);
 					sql = SqlGenerator.IdentitySql(classMap);
+					if (this.Logger != null) { this.Logger.Log(sql); }
 					result = connection.Query<long>(sql, entity, transaction, false, commandTimeout, CommandType.Text);
 				}
 				long identityValue = result.First();
@@ -117,6 +124,7 @@ namespace DapperExtensions
 				}
 			} else
 			{
+				if (this.Logger != null) { this.Logger.Log(sql); }
 				connection.Execute(sql, entity, transaction, commandTimeout, CommandType.Text);
 			}
 
@@ -160,6 +168,7 @@ namespace DapperExtensions
 				dynamicParameters.Add(parameter.Key, parameter.Value);
 			}
 
+			if (this.Logger != null) { this.Logger.Log(sql); }
 			return connection.Execute(sql, dynamicParameters, transaction, commandTimeout, CommandType.Text) > 0;
 		}
 
@@ -204,12 +213,14 @@ namespace DapperExtensions
 			IPredicate wherePredicate = GetPredicate(classMap, predicate);
 			Dictionary<string, object> parameters = new Dictionary<string, object>();
 			string sql = SqlGenerator.Count(classMap, wherePredicate, parameters);
+			if (this.Logger != null) { this.Logger.Log(sql); }
 			DynamicParameters dynamicParameters = new DynamicParameters();
 			foreach (var parameter in parameters)
 			{
 				dynamicParameters.Add(parameter.Key, parameter.Value);
 			}
 
+			if (this.Logger != null) { this.Logger.Log(sql); }
 			return (int)connection.Query(sql, dynamicParameters, transaction, false, commandTimeout, CommandType.Text).Single().Total;
 		}
 
@@ -284,6 +295,7 @@ namespace DapperExtensions
 				dynamicParameters.Add(parameter.Key, parameter.Value);
 			}
 
+			if (this.Logger != null) { this.Logger.Log(sql); }
 			return (int)(await connection.QueryAsync(sql, dynamicParameters, transaction, commandTimeout, CommandType.Text)).Single().Total;
 		}
 
@@ -307,6 +319,7 @@ namespace DapperExtensions
 
 			string sql = SqlGenerator.Insert(classMap);
 
+			if (this.Logger != null) { this.Logger.Log(sql); }
 			await connection.ExecuteAsync(sql, entities, transaction, commandTimeout, CommandType.Text);
 
 		}
@@ -328,6 +341,7 @@ namespace DapperExtensions
 
 			IDictionary<string, object> keyValues = new ExpandoObject();
 			string sql = SqlGenerator.Insert(classMap, entity);
+			if (this.Logger != null) { this.Logger.Log(sql); }
 			if (identityColumn != null)
 			{
 				IEnumerable<long> result;
@@ -390,6 +404,7 @@ namespace DapperExtensions
 				dynamicParameters.Add(parameter.Key, parameter.Value);
 			}
 
+			if (this.Logger != null) { this.Logger.Log(sql); }
 			return (await connection.ExecuteAsync(sql, dynamicParameters, transaction, commandTimeout, CommandType.Text)) > 0;
 
 		}
@@ -418,6 +433,7 @@ namespace DapperExtensions
 				dynamicParameters.Add(parameter.Key, parameter.Value);
 			}
 
+			if (this.Logger != null) { this.Logger.Log(sql); }
 			return connection.Query<T>(sql, dynamicParameters, transaction, buffered, commandTimeout, CommandType.Text);
 		}
 
@@ -431,6 +447,7 @@ namespace DapperExtensions
 				dynamicParameters.Add(parameter.Key, parameter.Value);
 			}
 
+			if (this.Logger != null) { this.Logger.Log(sql); }
 			return connection.Query<T>(sql, dynamicParameters, transaction, buffered, commandTimeout, CommandType.Text);
 		}
 
@@ -444,6 +461,7 @@ namespace DapperExtensions
 				dynamicParameters.Add(parameter.Key, parameter.Value);
 			}
 
+			if (this.Logger != null) { this.Logger.Log(sql); }
 			return connection.Query<T>(sql, dynamicParameters, transaction, buffered, commandTimeout, CommandType.Text);
 		}
 
@@ -457,6 +475,7 @@ namespace DapperExtensions
 				dynamicParameters.Add(parameter.Key, parameter.Value);
 			}
 
+			if (this.Logger != null) { this.Logger.Log(sql); }
 			connection.Execute(sql, dynamicParameters, transaction, commandTimeout, CommandType.Text);
 			return true;
 		}

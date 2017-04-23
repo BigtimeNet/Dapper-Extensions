@@ -20,7 +20,6 @@ namespace DapperExtensions.Test
 #if NET45
 			return AppDomain.CurrentDomain.BaseDirectory;
 #else
-
 			return AppContext.BaseDirectory;
 #endif
 		}
