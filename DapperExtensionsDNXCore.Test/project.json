@@ -2,7 +2,8 @@
 	"version": "1.0.0-*",
 	"buildOptions": {
 		"emitEntryPoint": true,
-		"copyToOutput": [ "SQLFiles\\**.*", "appsettings.json" ]
+				"copyToOutput": [ "SQLFiles\\**.*", "appsettings.json" ],
+				"embed": ["unnamed.png"]
 	},
 	"dependencies": {
 		"DapperExtensionsDNX.Test.Entities": "1.0.0",

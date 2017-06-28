@@ -1,4 +1,6 @@
-﻿using System;
+﻿using NUnit.Common;
+using NUnitLite;
+using System;
 using System.Reflection;
 
 namespace DapperExtensionsDNXCore.Test
@@ -7,9 +9,9 @@ namespace DapperExtensionsDNXCore.Test
     {
         public static void Main(string[] args)
         {
-			/*var result = new AutoRun(typeof(Program).GetTypeInfo().Assembly)
+			var result = new AutoRun(typeof(Program).GetTypeInfo().Assembly)
 							 .Execute(args, new ExtendedTextWrapper(Console.Out), 
-							 Console.In);*/
+							 Console.In);
 			Console.ReadKey();
 			//return result;
 		}

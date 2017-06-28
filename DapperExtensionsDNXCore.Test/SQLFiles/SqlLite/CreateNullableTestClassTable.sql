@@ -7,5 +7,6 @@
 	DTVal NVARCHAR(100),
 	NullableDTVal NVARCHAR(100) NULL,
 	EnumVal NVARCHAR(20),
-	NullableEnumVal NVARCHAR(20) NULL
+	NullableEnumVal NVARCHAR(20) NULL,
+	BlobField BLOB NULL
 )

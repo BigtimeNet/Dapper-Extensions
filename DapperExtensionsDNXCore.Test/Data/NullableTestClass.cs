@@ -18,5 +18,6 @@ namespace DapperExtensions.Test.Data {
 		public DateTime? NullableDTVal { get; set; }
 		public ETestEnum EnumVal { get; set; }
 		public ETestEnum? NullableEnumVal { get; set; }
+		public byte[] BlobField { get; set; }
 	}
 }

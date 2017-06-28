@@ -32,7 +32,7 @@ namespace DapperExtensionsDNXCore.Test.PredicateTests
 			var sql = predicate.GetSql(_generator, parameters);
 
 			Assert.AreEqual(0, parameters.Count);
-			Assert.AreEqual("(Name = Value)", sql);
+			Assert.AreEqual("([Table].[Name] = [Table].[Value])", sql);
 		}
 
 		protected PropertyPredicate<T, T2> Setup<T, T2>(string propertyName, Operator op, string propertyName2, bool not)
