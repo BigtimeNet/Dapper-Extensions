@@ -1,13 +1,13 @@
 {
 	"version": "1.0.0-*",
-	"dependencies": {
-		"DapperExtensionsDNX": "1.1.2"
-	},
+   "dependencies": {
+      "Dapper": "1.50.4",
+      "DapperExtensionsDNX": "1.1.2"
+   },
 	"frameworks": {
 		"netstandard1.6": {
 			"imports": "dnxcore50",
 			"dependencies": {
-				"Dapper": "1.50.2",
 				"Microsoft.CSharp": "4.0.1",
 				"System.Collections": "4.0.11",
 				"System.Data.Common": "4.1.0",
@@ -21,7 +21,6 @@
 		},
 		"net451": {
 			"dependencies": {
-				"Dapper": "1.50.2"
 			},
 			"frameworkAssemblies": {
 				"System.Numerics": "4.0.0.0"

@@ -24,6 +24,7 @@ namespace DapperExtensions
 		bool Delete<T>(IDbConnection connection, T entity, DbTransaction transaction, int? commandTimeout) where T : class;
 		bool Delete<T>(IDbConnection connection, object predicate, DbTransaction transaction, int? commandTimeout) where T : class;
 		IEnumerable<T> GetList<T>(IDbConnection connection, object predicate, IList<ISort> sort, DbTransaction transaction, int? commandTimeout, bool buffered) where T : class;
+		string GetWhere<T>(IPredicate predicate, Dictionary<string, object> parameters) where T : class;
 		IEnumerable<T> GetPage<T>(IDbConnection connection, object predicate, IList<ISort> sort, int page, int resultsPerPage, DbTransaction transaction, int? commandTimeout, bool buffered) where T : class;
 		IEnumerable<T> GetSet<T>(IDbConnection connection, object predicate, IList<ISort> sort, int firstResult, int maxResults, DbTransaction transaction, int? commandTimeout, bool buffered) where T : class;
 		int Count<T>(IDbConnection connection, object predicate, DbTransaction transaction, int? commandTimeout) where T : class;
@@ -191,6 +192,13 @@ namespace DapperExtensions
 			IClassMapper classMap = SqlGenerator.Configuration.GetMap<T>();
 			IPredicate wherePredicate = GetPredicate(classMap, predicate);
 			return GetList<T>(connection, classMap, wherePredicate, sort, transaction, commandTimeout, true);
+		}
+
+		public string GetWhere<T>(IPredicate predicate, Dictionary<string,object> parameters) where T : class
+		{
+			IClassMapper classMap = SqlGenerator.Configuration.GetMap<T>();
+			IPredicate wherePredicate = GetPredicate(classMap, predicate);
+			return wherePredicate.GetSql(SqlGenerator, parameters);
 		}
 
 		public IEnumerable<T> GetPage<T>(IDbConnection connection, object predicate, IList<ISort> sort, int page, int resultsPerPage, DbTransaction transaction, int? commandTimeout, bool buffered) where T : class

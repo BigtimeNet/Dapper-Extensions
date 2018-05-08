@@ -26,6 +26,19 @@ namespace DapperExtensions.Test.IntegrationTests.Sqlite {
 		}
 
 		[Test]
+		public void GetWhere() {
+			var myPredicate = Predicates.Group(GroupOperator.And, new IPredicate[] {
+				Predicates.Field<Person>(x=>x.FirstName, Operator.Like, "a%"),
+				Predicates.Field<Person>(x=>x.Id, Operator.Le, 2500)
+			});
+			var parameters = new Dictionary<string, object>();
+			var whereClause = DapperExtensions.GetWhere<Person>(myPredicate, parameters);
+			Console.WriteLine(whereClause);
+			Assert.IsNotNull(whereClause);
+			Assert.AreNotEqual(0, parameters.Count);
+		}
+
+		[Test]
 		public void SelectTableBasicTest() {
 
 			var personList = Db.GetList<Person>();

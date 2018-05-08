@@ -205,6 +205,13 @@ namespace DapperExtensions
 		}
 
 		/// <summary>
+		/// Returns a valid WHERE clause for a given object.
+		/// </summary>
+		public static string GetWhere<T>(IPredicate predicate, Dictionary<string,object> parameters) where T : class {
+			return Instance.GetWhere<T>(predicate, parameters);
+		}
+
+		/// <summary>
 		/// Executes a select query using the specified predicate, returning an IEnumerable data typed as per T.
 		/// Data returned is dependent upon the specified page and resultsPerPage.
 		/// </summary>
