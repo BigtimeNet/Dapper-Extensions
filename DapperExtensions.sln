@@ -1,18 +1,18 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2047
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{7F5566E2-27F4-4CB7-A0F2-2AFC602C4871}"
 	ProjectSection(SolutionItems) = preProject
 		.nuget\packages.config = .nuget\packages.config
 	EndProjectSection
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "DapperExtensionsDNX", "DapperExtensionsDNX\DapperExtensionsDNX.xproj", "{CAA1A673-6521-4954-BF05-37FFE016E5C3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DapperExtensionsDNX", "DapperExtensionsDNX\DapperExtensionsDNX.csproj", "{CAA1A673-6521-4954-BF05-37FFE016E5C3}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "DapperExtensionsDNXCore.Test", "DapperExtensionsDNXCore.Test\DapperExtensionsDNXCore.Test.xproj", "{83575094-2C44-47AE-B3AB-FEEB9242E626}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DapperExtensionsDNXCore.Test", "DapperExtensionsDNXCore.Test\DapperExtensionsDNXCore.Test.csproj", "{83575094-2C44-47AE-B3AB-FEEB9242E626}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "DapperExtensionsDNX.Test.Entities", "DapperExtensionsDNX.Test.Entities\DapperExtensionsDNX.Test.Entities.xproj", "{3E5EA0C5-1272-4E28-B784-E6EE95659071}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DapperExtensionsDNX.Test.Entities", "DapperExtensionsDNX.Test.Entities\DapperExtensionsDNX.Test.Entities.csproj", "{3E5EA0C5-1272-4E28-B784-E6EE95659071}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,5 +63,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D8A31088-9F68-4EAF-BECB-2E3D33D3FECE}
 	EndGlobalSection
 EndGlobal
