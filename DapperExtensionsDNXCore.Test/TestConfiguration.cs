@@ -17,7 +17,7 @@ namespace DapperExtensions.Test
 
 		public static string getBasePath()
 		{
-#if NET45
+#if NET451
 			return AppDomain.CurrentDomain.BaseDirectory;
 #else
 			return AppContext.BaseDirectory;
