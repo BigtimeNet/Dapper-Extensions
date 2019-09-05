@@ -20,10 +20,13 @@ namespace DapperExtensions.Test.IntegrationTests.SqlServer
 		public virtual void Setup()
 		{
 			var connectString = "";
-			var connectStringSetting = TestConfiguration.GetConfiguration().GetSection("ConnectionStrings").GetChildren().FirstOrDefault(x => x.Key == "SQLServer");
-			if (connectStringSetting != null) { connectString = connectStringSetting.Value; }
-
-			if(connectString =="") {
+#if NET451
+            connectString = TestConfiguration.GetConnectionString();
+#else
+            var connectStringSetting = TestConfiguration.GetConfiguration().GetSection("ConnectionStrings").GetChildren().FirstOrDefault(x => x.Key == "SQLServer");
+            if (connectStringSetting != null) { connectString = connectStringSetting.Value; }
+#endif
+            if (connectString =="") {
 				Assert.Inconclusive("There is no SQL server connection string in appsettings.json for this test project.");
 				return;
 			}
