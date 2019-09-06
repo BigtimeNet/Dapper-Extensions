@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <Description>Dapper Extensions DNX</Description>
-    <VersionPrefix>1.1.3</VersionPrefix>
+    <VersionPrefix>1.1.4</VersionPrefix>
     <Authors>Rafael.Carvalho;Brian.Saunders</Authors>
     <TargetFrameworks>netcoreapp2.1;netstandard2.0;net451</TargetFrameworks>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
@@ -19,7 +19,11 @@
     <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <IsPackable>true</IsPackable>
     <NoWarn>1701;1702;1591;1570;1572;1573</NoWarn>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageReleaseNotes>Added target frameworks .net core 2.1 and .net standard 2.0 with support for Dapper 2.0.4.  Upgraded to Dapper 1.60.6 when targeting 4.5.1.</PackageReleaseNotes>
+    <PackageProjectUrl>https://github.com/BigtimeNet/Dapper-Extensions</PackageProjectUrl>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net451'">

@@ -12,7 +12,38 @@
     <releaseNotes>Added target frameworks .net core 2.1 and .net standard 2.0 with support for Dapper 2.0.4.  Upgraded to Dapper 1.60.6 when targeting 4.5.1.</releaseNotes>
     <copyright>Copyright 2019</copyright>
     <dependencies>
-      <dependency id="Dapper" version="1.50.4" />
+      <group targetFramework="net451">
+        <dependency id="Dapper" version="1.60.6" />
+        <dependency id="Microsoft.CSharp" version="4.5.0" />
+        <dependency id="System.Collections" version="4.3.0" />
+        <dependency id="System.Linq" version="4.3.0" />
+        <dependency id="System.Runtime" version="4.3.1" />
+        <dependency id="System.Runtime.Numerics" version="4.3.0" />
+        <dependency id="System.Text.Encoding.Extensions" version="4.3.0" />
+        <dependency id="System.Threading" version="4.3.0" />
+      </group>
+      <group targetFramework="netstandard2.0">
+        <dependency id="Dapper" version="2.0.4" />
+        <dependency id="Microsoft.Extensions.Logging" version="2.2.0" />
+        <dependency id="Microsoft.CSharp" version="4.5.0" />
+        <dependency id="System.Collections" version="4.3.0" />
+        <dependency id="System.Linq" version="4.3.0" />
+        <dependency id="System.Runtime" version="4.3.1" />
+        <dependency id="System.Runtime.Numerics" version="4.3.0" />
+        <dependency id="System.Text.Encoding.Extensions" version="4.3.0" />
+        <dependency id="System.Threading" version="4.3.0" />
+      </group>
+      <group targetFramework="netcoreapp2.1">
+        <dependency id="Dapper" version="2.0.4" />
+        <dependency id="Microsoft.Extensions.Logging" version="2.2.0" />
+        <dependency id="Microsoft.CSharp" version="4.5.0" />
+        <dependency id="System.Collections" version="4.3.0" />
+        <dependency id="System.Linq" version="4.3.0" />
+        <dependency id="System.Runtime" version="4.3.1" />
+        <dependency id="System.Runtime.Numerics" version="4.3.0" />
+        <dependency id="System.Text.Encoding.Extensions" version="4.3.0" />
+        <dependency id="System.Threading" version="4.3.0" />
+      </group>
     </dependencies>
   </metadata>
   <files>
