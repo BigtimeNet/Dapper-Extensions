@@ -62,7 +62,13 @@ namespace DapperExtensions.Mapper
 					}
 				}
 
-			}
+                //Ignore attribute (not included in ANY queries)
+                if (property.GetCustomAttributes(true).Any(attr => attr.GetType().Name == typeof(IgnoreAttribute).Name)) {
+                    if (myPM == null) { myPM = Map(property); }
+                    myPM.Ignore();
+                }
+
+            }
 
 			AutoMap();
 
@@ -159,5 +165,12 @@ namespace Dapper
 		/// </summary>
 		public bool IsReadOnly { get; private set; }
 	}
+
+    /// <summary>
+	/// Optional Ignore attribute.
+	/// Use this attribute to skip this property when performing any database queries (select/insert/update).
+	/// </summary>
+	[AttributeUsage(AttributeTargets.Property)]
+	public class IgnoreAttribute : Attribute { }
 
 }

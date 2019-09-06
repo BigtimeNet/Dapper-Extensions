@@ -48,6 +48,7 @@ namespace DapperExtensions.Test.IntegrationTests.SqlServer {
 				var animals = (await Db.GetListAsync<Animal>()).ToList();
 				Assert.AreEqual(3, animals.Count);
 			}
+            
 		}
 
 		[TestFixture]
@@ -373,5 +374,40 @@ namespace DapperExtensions.Test.IntegrationTests.SqlServer {
 				Assert.AreEqual(1, people2.Count);
 			}
 		}
-	}
+
+        [TestFixture]
+        public class IgnoreAttribute : SqlServerBaseFixture {
+
+            [Test]
+            public async Task SelectClassWithIgnoredAttribute_PropertyIgnored() {
+                City chicago = new Data.City { Name = "Chicago", Population = 2000000, State = "IL", Abbreviation = "CHI" };
+                await Db.InsertAsync(chicago);
+
+                City chicago2 = Db.Get<City>("Chicago");
+                Assert.AreEqual(chicago.Name, chicago2.Name);
+                Assert.AreEqual(chicago.Population, chicago2.Population);
+                Assert.AreEqual(chicago.State, chicago2.State);
+            }
+
+            [Test]
+            public async Task UpdateClassWithIgnoredAttribute_PropertyIgnored() {
+                var chicago = new Data.City { Name = "Chicago", Population = 2000000, State = "IL", Abbreviation = "CHI" };
+
+                await Db.InsertAsync(chicago);
+
+                chicago.Population = 3000000;
+                await Db.UpdateAsync(chicago);
+
+                City chicago2 = Db.Get<City>("Chicago");
+                Assert.AreEqual(3000000, chicago2.Population);
+            }
+
+            [Test]
+            public void InsertClassWithIgnoredAttribute_PropertyIgnored() {
+                var chicago = new Data.City { Name = "Chicago", Population = 2000000, State = "IL", Abbreviation = "CHI" };
+                Assert.DoesNotThrowAsync(async () => await Db.InsertAsync(chicago));
+            }
+
+        }
+    }
 }
