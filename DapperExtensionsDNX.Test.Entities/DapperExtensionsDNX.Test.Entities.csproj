@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netcoreapp2.1;net451</TargetFrameworks>
+    <AssemblyName>DapperExtensionsDNX.Test.Entities</AssemblyName>
+    <PackageId>DapperExtensionsDNX.Test.Entities</PackageId>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <NoWarn>1701;1702;1591;1570;1572;1573</NoWarn>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\DapperExtensionsDNX\DapperExtensionsDNX.csproj" />
+  </ItemGroup>
+  
+</Project>

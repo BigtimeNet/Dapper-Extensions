@@ -5,17 +5,13 @@ using System.Linq;
 using DapperExtensions.Test.Data;
 using NUnit.Framework;
 
-namespace DapperExtensions.Test.IntegrationTests.SqlServer
-{
+namespace DapperExtensions.Test.IntegrationTests.SqlServer {
     [TestFixture]
-    public class CrudFixture
-    {
+    public class CrudFixture {
         [TestFixture]
-        public class InsertMethod : SqlServerBaseFixture
-        {
+        public class InsertMethod : SqlServerBaseFixture {
             [Test]
-            public void AddsEntityToDatabase_ReturnsKey()
-            {
+            public void AddsEntityToDatabase_ReturnsKey() {
                 Person p = new Person { Active = true, FirstName = "Foo", LastName = "Bar", DateCreated = DateTime.UtcNow };
                 int id = (int)Db.Insert(p);
                 Assert.AreEqual(1, id);
@@ -23,8 +19,7 @@ namespace DapperExtensions.Test.IntegrationTests.SqlServer
             }
 
             [Test]
-            public void AddsEntityToDatabase_ReturnsCompositeKey()
-            {
+            public void AddsEntityToDatabase_ReturnsCompositeKey() {
                 Multikey m = new Multikey { Key2 = "key", Value = "foo" };
                 var key = Db.Insert(m);
                 Assert.AreEqual(1, key.Key1);
@@ -32,8 +27,7 @@ namespace DapperExtensions.Test.IntegrationTests.SqlServer
             }
 
             [Test]
-            public void AddsEntityToDatabase_ReturnsGeneratedPrimaryKey()
-            {
+            public void AddsEntityToDatabase_ReturnsGeneratedPrimaryKey() {
                 Animal a1 = new Animal { Name = "Foo" };
                 Db.Insert(a1);
 
@@ -43,8 +37,7 @@ namespace DapperExtensions.Test.IntegrationTests.SqlServer
             }
 
             [Test]
-            public void AddsMultipleEntitiesToDatabase()
-            {
+            public void AddsMultipleEntitiesToDatabase() {
                 Animal a1 = new Animal { Name = "Foo" };
                 Animal a2 = new Animal { Name = "Bar" };
                 Animal a3 = new Animal { Name = "Baz" };
@@ -57,18 +50,15 @@ namespace DapperExtensions.Test.IntegrationTests.SqlServer
         }
 
         [TestFixture]
-        public class GetMethod : SqlServerBaseFixture
-        {
+        public class GetMethod : SqlServerBaseFixture {
             [Test]
-            public void UsingKey_ReturnsEntity()
-            {
-                Person p1 = new Person
-                                {
-                                    Active = true,
-                                    FirstName = "Foo",
-                                    LastName = "Bar",
-                                    DateCreated = DateTime.UtcNow
-                                };
+            public void UsingKey_ReturnsEntity() {
+                Person p1 = new Person {
+                    Active = true,
+                    FirstName = "Foo",
+                    LastName = "Bar",
+                    DateCreated = DateTime.UtcNow
+                };
                 int id = (int)Db.Insert(p1);
 
                 Person p2 = Db.Get<Person>(id);
@@ -78,8 +68,7 @@ namespace DapperExtensions.Test.IntegrationTests.SqlServer
             }
 
             [Test]
-            public void UsingCompositeKey_ReturnsEntity()
-            {
+            public void UsingCompositeKey_ReturnsEntity() {
                 Multikey m1 = new Multikey { Key2 = "key", Value = "bar" };
                 var key = Db.Insert(m1);
 
@@ -91,18 +80,15 @@ namespace DapperExtensions.Test.IntegrationTests.SqlServer
         }
 
         [TestFixture]
-        public class DeleteMethod : SqlServerBaseFixture
-        {
+        public class DeleteMethod : SqlServerBaseFixture {
             [Test]
-            public void UsingKey_DeletesFromDatabase()
-            {
-                Person p1 = new Person
-                                {
-                                    Active = true,
-                                    FirstName = "Foo",
-                                    LastName = "Bar",
-                                    DateCreated = DateTime.UtcNow
-                                };
+            public void UsingKey_DeletesFromDatabase() {
+                Person p1 = new Person {
+                    Active = true,
+                    FirstName = "Foo",
+                    LastName = "Bar",
+                    DateCreated = DateTime.UtcNow
+                };
                 int id = (int)Db.Insert(p1);
 
                 Person p2 = Db.Get<Person>(id);
@@ -111,8 +97,7 @@ namespace DapperExtensions.Test.IntegrationTests.SqlServer
             }
 
             [Test]
-            public void UsingCompositeKey_DeletesFromDatabase()
-            {
+            public void UsingCompositeKey_DeletesFromDatabase() {
                 Multikey m1 = new Multikey { Key2 = "key", Value = "bar" };
                 var key = Db.Insert(m1);
 
@@ -122,8 +107,7 @@ namespace DapperExtensions.Test.IntegrationTests.SqlServer
             }
 
             [Test]
-            public void UsingPredicate_DeletesRows()
-            {
+            public void UsingPredicate_DeletesRows() {
                 Person p1 = new Person { Active = true, FirstName = "Foo", LastName = "Bar", DateCreated = DateTime.UtcNow };
                 Person p2 = new Person { Active = true, FirstName = "Foo", LastName = "Bar", DateCreated = DateTime.UtcNow };
                 Person p3 = new Person { Active = true, FirstName = "Foo", LastName = "Barz", DateCreated = DateTime.UtcNow };
@@ -143,8 +127,7 @@ namespace DapperExtensions.Test.IntegrationTests.SqlServer
             }
 
             [Test]
-            public void UsingObject_DeletesRows()
-            {
+            public void UsingObject_DeletesRows() {
                 Person p1 = new Person { Active = true, FirstName = "Foo", LastName = "Bar", DateCreated = DateTime.UtcNow };
                 Person p2 = new Person { Active = true, FirstName = "Foo", LastName = "Bar", DateCreated = DateTime.UtcNow };
                 Person p3 = new Person { Active = true, FirstName = "Foo", LastName = "Barz", DateCreated = DateTime.UtcNow };
@@ -155,7 +138,7 @@ namespace DapperExtensions.Test.IntegrationTests.SqlServer
                 var list = Db.GetList<Person>();
                 Assert.AreEqual(3, list.Count());
 
-                var result = Db.Delete<Person>(new { LastName = "Bar"} );
+                var result = Db.Delete<Person>(new { LastName = "Bar" });
                 Assert.IsTrue(result);
 
                 list = Db.GetList<Person>();
@@ -164,18 +147,15 @@ namespace DapperExtensions.Test.IntegrationTests.SqlServer
         }
 
         [TestFixture]
-        public class UpdateMethod : SqlServerBaseFixture
-        {
+        public class UpdateMethod : SqlServerBaseFixture {
             [Test]
-            public void UsingKey_UpdatesEntity()
-            {
-                Person p1 = new Person
-                                {
-                                    Active = true,
-                                    FirstName = "Foo",
-                                    LastName = "Bar",
-                                    DateCreated = DateTime.UtcNow
-                                };
+            public void UsingKey_UpdatesEntity() {
+                Person p1 = new Person {
+                    Active = true,
+                    FirstName = "Foo",
+                    LastName = "Bar",
+                    DateCreated = DateTime.UtcNow
+                };
                 int id = (int)Db.Insert(p1);
 
                 var p2 = Db.Get<Person>(id);
@@ -191,8 +171,7 @@ namespace DapperExtensions.Test.IntegrationTests.SqlServer
             }
 
             [Test]
-            public void UsingCompositeKey_UpdatesEntity()
-            {
+            public void UsingCompositeKey_UpdatesEntity() {
                 Multikey m1 = new Multikey { Key2 = "key", Value = "bar" };
                 var key = Db.Insert(m1);
 
@@ -209,11 +188,9 @@ namespace DapperExtensions.Test.IntegrationTests.SqlServer
         }
 
         [TestFixture]
-        public class GetListMethod : SqlServerBaseFixture
-        {
+        public class GetListMethod : SqlServerBaseFixture {
             [Test]
-            public void UsingNullPredicate_ReturnsAll()
-            {
+            public void UsingNullPredicate_ReturnsAll() {
                 Db.Insert(new Person { Active = true, FirstName = "a", LastName = "a1", DateCreated = DateTime.UtcNow });
                 Db.Insert(new Person { Active = false, FirstName = "b", LastName = "b1", DateCreated = DateTime.UtcNow });
                 Db.Insert(new Person { Active = true, FirstName = "c", LastName = "c1", DateCreated = DateTime.UtcNow });
@@ -224,8 +201,7 @@ namespace DapperExtensions.Test.IntegrationTests.SqlServer
             }
 
             [Test]
-            public void UsingPredicate_ReturnsMatching()
-            {
+            public void UsingPredicate_ReturnsMatching() {
                 Db.Insert(new Person { Active = true, FirstName = "a", LastName = "a1", DateCreated = DateTime.UtcNow });
                 Db.Insert(new Person { Active = false, FirstName = "b", LastName = "b1", DateCreated = DateTime.UtcNow });
                 Db.Insert(new Person { Active = true, FirstName = "c", LastName = "c1", DateCreated = DateTime.UtcNow });
@@ -238,8 +214,7 @@ namespace DapperExtensions.Test.IntegrationTests.SqlServer
             }
 
             [Test]
-            public void UsingObject_ReturnsMatching()
-            {
+            public void UsingObject_ReturnsMatching() {
                 Db.Insert(new Person { Active = true, FirstName = "a", LastName = "a1", DateCreated = DateTime.UtcNow });
                 Db.Insert(new Person { Active = false, FirstName = "b", LastName = "b1", DateCreated = DateTime.UtcNow });
                 Db.Insert(new Person { Active = true, FirstName = "c", LastName = "c1", DateCreated = DateTime.UtcNow });
@@ -253,11 +228,9 @@ namespace DapperExtensions.Test.IntegrationTests.SqlServer
         }
 
         [TestFixture]
-        public class GetPageMethod : SqlServerBaseFixture
-        {
+        public class GetPageMethod : SqlServerBaseFixture {
             [Test]
-            public void UsingNullPredicate_ReturnsMatching()
-            {
+            public void UsingNullPredicate_ReturnsMatching() {
                 var id1 = Db.Insert(new Person { Active = true, FirstName = "Sigma", LastName = "Alpha", DateCreated = DateTime.UtcNow });
                 var id2 = Db.Insert(new Person { Active = false, FirstName = "Delta", LastName = "Alpha", DateCreated = DateTime.UtcNow });
                 var id3 = Db.Insert(new Person { Active = true, FirstName = "Theta", LastName = "Gamma", DateCreated = DateTime.UtcNow });
@@ -276,8 +249,7 @@ namespace DapperExtensions.Test.IntegrationTests.SqlServer
             }
 
             [Test]
-            public void UsingPredicate_ReturnsMatching()
-            {
+            public void UsingPredicate_ReturnsMatching() {
                 var id1 = Db.Insert(new Person { Active = true, FirstName = "Sigma", LastName = "Alpha", DateCreated = DateTime.UtcNow });
                 var id2 = Db.Insert(new Person { Active = false, FirstName = "Delta", LastName = "Alpha", DateCreated = DateTime.UtcNow });
                 var id3 = Db.Insert(new Person { Active = true, FirstName = "Theta", LastName = "Gamma", DateCreated = DateTime.UtcNow });
@@ -296,8 +268,7 @@ namespace DapperExtensions.Test.IntegrationTests.SqlServer
             }
 
             [Test]
-            public void NotFirstPage_Returns_NextResults()
-            {
+            public void NotFirstPage_Returns_NextResults() {
                 var id1 = Db.Insert(new Person { Active = true, FirstName = "Sigma", LastName = "Alpha", DateCreated = DateTime.UtcNow });
                 var id2 = Db.Insert(new Person { Active = false, FirstName = "Delta", LastName = "Alpha", DateCreated = DateTime.UtcNow });
                 var id3 = Db.Insert(new Person { Active = true, FirstName = "Theta", LastName = "Gamma", DateCreated = DateTime.UtcNow });
@@ -316,8 +287,7 @@ namespace DapperExtensions.Test.IntegrationTests.SqlServer
             }
 
             [Test]
-            public void UsingObject_ReturnsMatching()
-            {
+            public void UsingObject_ReturnsMatching() {
                 var id1 = Db.Insert(new Person { Active = true, FirstName = "Sigma", LastName = "Alpha", DateCreated = DateTime.UtcNow });
                 var id2 = Db.Insert(new Person { Active = false, FirstName = "Delta", LastName = "Alpha", DateCreated = DateTime.UtcNow });
                 var id3 = Db.Insert(new Person { Active = true, FirstName = "Theta", LastName = "Gamma", DateCreated = DateTime.UtcNow });
@@ -337,11 +307,9 @@ namespace DapperExtensions.Test.IntegrationTests.SqlServer
         }
 
         [TestFixture]
-        public class CountMethod : SqlServerBaseFixture
-        {
+        public class CountMethod : SqlServerBaseFixture {
             [Test]
-            public void UsingNullPredicate_Returns_Count()
-            {
+            public void UsingNullPredicate_Returns_Count() {
                 Db.Insert(new Person { Active = true, FirstName = "a", LastName = "a1", DateCreated = DateTime.UtcNow.AddDays(-10) });
                 Db.Insert(new Person { Active = false, FirstName = "b", LastName = "b1", DateCreated = DateTime.UtcNow.AddDays(-10) });
                 Db.Insert(new Person { Active = true, FirstName = "c", LastName = "c1", DateCreated = DateTime.UtcNow.AddDays(-3) });
@@ -352,8 +320,7 @@ namespace DapperExtensions.Test.IntegrationTests.SqlServer
             }
 
             [Test]
-            public void UsingPredicate_Returns_Count()
-            {
+            public void UsingPredicate_Returns_Count() {
                 Db.Insert(new Person { Active = true, FirstName = "a", LastName = "a1", DateCreated = DateTime.UtcNow.AddDays(-10) });
                 Db.Insert(new Person { Active = false, FirstName = "b", LastName = "b1", DateCreated = DateTime.UtcNow.AddDays(-10) });
                 Db.Insert(new Person { Active = true, FirstName = "c", LastName = "c1", DateCreated = DateTime.UtcNow.AddDays(-3) });
@@ -365,8 +332,7 @@ namespace DapperExtensions.Test.IntegrationTests.SqlServer
             }
 
             [Test]
-            public void UsingObject_Returns_Count()
-            {
+            public void UsingObject_Returns_Count() {
                 Db.Insert(new Person { Active = true, FirstName = "a", LastName = "a1", DateCreated = DateTime.UtcNow.AddDays(-10) });
                 Db.Insert(new Person { Active = false, FirstName = "b", LastName = "b1", DateCreated = DateTime.UtcNow.AddDays(-10) });
                 Db.Insert(new Person { Active = true, FirstName = "c", LastName = "c1", DateCreated = DateTime.UtcNow.AddDays(-3) });
@@ -379,11 +345,9 @@ namespace DapperExtensions.Test.IntegrationTests.SqlServer
         }
 
         [TestFixture]
-        public class GetMultipleMethod : SqlServerBaseFixture
-        {
+        public class GetMultipleMethod : SqlServerBaseFixture {
             [Test]
-            public void ReturnsItems()
-            {
+            public void ReturnsItems() {
                 Db.Insert(new Person { Active = true, FirstName = "a", LastName = "a1", DateCreated = DateTime.UtcNow.AddDays(-10) });
                 Db.Insert(new Person { Active = false, FirstName = "b", LastName = "b1", DateCreated = DateTime.UtcNow.AddDays(-10) });
                 Db.Insert(new Person { Active = true, FirstName = "c", LastName = "c1", DateCreated = DateTime.UtcNow.AddDays(-3) });
@@ -407,6 +371,41 @@ namespace DapperExtensions.Test.IntegrationTests.SqlServer
                 Assert.AreEqual(2, animals.Count);
                 Assert.AreEqual(1, people2.Count);
             }
+        }
+
+        [TestFixture]
+        public class IgnoreAttribute : SqlServerBaseFixture {
+
+            [Test]
+            public void SelectClassWithIgnoredAttribute_PropertyIgnored() {
+                City chicago = new Data.City { Name = "Chicago", Population = 2000000, State = "IL", Abbreviation = "CHI" };
+                Db.Insert(chicago);
+
+                City chicago2 = Db.Get<City>("Chicago");
+                Assert.AreEqual(chicago.Name, chicago2.Name);
+                Assert.AreEqual(chicago.Population, chicago2.Population);
+                Assert.AreEqual(chicago.State, chicago2.State);
+            }
+
+            [Test]
+            public void UpdateClassWithIgnoredAttribute_PropertyIgnored() {
+                var chicago = new Data.City { Name = "Chicago", Population = 2000000, State = "IL", Abbreviation = "CHI" };
+                
+                Db.Insert(chicago);
+
+                chicago.Population = 3000000;
+                Db.Update(chicago);
+
+                City chicago2 = Db.Get<City>("Chicago");
+                Assert.AreEqual(3000000, chicago2.Population);
+            }
+
+            [Test]
+            public void InsertClassWithIgnoredAttribute_PropertyIgnored() {
+                var chicago = new Data.City { Name = "Chicago", Population = 2000000, State = "IL", Abbreviation = "CHI" };
+                Assert.DoesNotThrow(() => Db.Insert(chicago));
+            }
+
         }
     }
 }
